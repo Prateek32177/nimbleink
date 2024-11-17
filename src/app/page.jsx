@@ -174,10 +174,10 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
       <Logo />
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen md:min-h-screen h-[100svh] md:h-screen flex flex-col">
         {/* Main Slider Section */}
         <div className="relative flex-1 overflow-hidden">
-          <div className="fixed inset-0 flex">
+          <div className="fixed md:absolute inset-0 flex">
             {artworks.map((artwork, index) => {
               const styles = calculateSlideStyles(index);
               const isActive = index === currentIndex;
@@ -275,7 +275,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-black/60 border-t border-white/10 absolute  z-20 backdrop-blur-sm w-full bottom-0">
+          <div className="bg-black/60 border-t border-white/10 bottom-0 absolute   z-20 backdrop-blur-sm w-full ">
             <div className="max-w-7xl mx-auto px-4">
               <div className="py-4 md:py-6 flex items-center justify-between">
                 <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
