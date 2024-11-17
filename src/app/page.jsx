@@ -174,7 +174,7 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
       <Logo />
-      <div className="h-[100vh] flex flex-col">
+      <div className="min-h-screen flex flex-col">
         {/* Main Slider Section */}
         <div className="relative flex-1 overflow-hidden">
           <div className="absolute inset-0 flex">
