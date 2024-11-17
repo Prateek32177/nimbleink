@@ -177,7 +177,7 @@ export default function Home() {
       <div className="min-h-screen flex flex-col">
         {/* Main Slider Section */}
         <div className="relative flex-1 overflow-hidden">
-          <div className="absolute inset-0 flex">
+          <div className="fixed inset-0 flex">
             {artworks.map((artwork, index) => {
               const styles = calculateSlideStyles(index);
               const isActive = index === currentIndex;
