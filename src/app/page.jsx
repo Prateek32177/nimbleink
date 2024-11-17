@@ -168,7 +168,7 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-black min-h-screen text-white overflow-hidden w-full">
+    <div className="bg-black h-screen text-white overflow-hidden w-full">
       <audio ref={audioRef} loop>
         <source src="/calm.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
@@ -276,7 +276,7 @@ export default function Home() {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="bg-black/90 border-t border-white/10">
+        <div className="bg-black/70 border-t border-white/10 absolute  z-20 backdrop-blur-sm w-full bottom-0">
           <div className="max-w-7xl mx-auto px-4">
             <div className="py-4 md:py-6 flex items-center justify-between">
               <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
