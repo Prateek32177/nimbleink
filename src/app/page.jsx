@@ -273,41 +273,41 @@ export default function Home() {
               );
             })}
           </div>
-        </div>
 
-        {/* Bottom Navigation */}
-        <div className="bg-black/60 border-t border-white/10 absolute  z-20 backdrop-blur-sm w-full bottom-0">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="py-4 md:py-6 flex items-center justify-between">
-              <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
-                {artworks.map((artwork, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => !isTransitioning && setCurrentIndex(index)}
-                    className={`text-left group ${
-                      index === currentIndex ? "text-white" : "text-white/40"
-                    }`}
-                    whileHover={{ opacity: 1 }}
-                  >
-                    <p className="text-xs md:text-sm font-medium mb-1 md:mb-2">{`0${
-                      index + 1
-                    }`}</p>
-                    <h3 className="text-sm md:text-lg font-semibold truncate">
-                      {artwork.title}
-                    </h3>
-                    <p className="text-xs md:text-sm opacity-60 truncate hidden md:block">
-                      {artwork.description}
-                    </p>
-                    {index === currentIndex && (
-                      <motion.div
-                        className="h-px bg-white mt-2"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 5, ease: "linear" }}
-                      />
-                    )}
-                  </motion.button>
-                ))}
+          {/* Bottom Navigation */}
+          <div className="bg-black/60 border-t border-white/10 absolute  z-20 backdrop-blur-sm w-full bottom-0">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="py-4 md:py-6 flex items-center justify-between">
+                <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
+                  {artworks.map((artwork, index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => !isTransitioning && setCurrentIndex(index)}
+                      className={`text-left group ${
+                        index === currentIndex ? "text-white" : "text-white/40"
+                      }`}
+                      whileHover={{ opacity: 1 }}
+                    >
+                      <p className="text-xs md:text-sm font-medium mb-1 md:mb-2">{`0${
+                        index + 1
+                      }`}</p>
+                      <h3 className="text-sm md:text-lg font-semibold truncate">
+                        {artwork.title}
+                      </h3>
+                      <p className="text-xs md:text-sm opacity-60 truncate hidden md:block">
+                        {artwork.description}
+                      </p>
+                      {index === currentIndex && (
+                        <motion.div
+                          className="h-px bg-white mt-2"
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 5, ease: "linear" }}
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -315,7 +315,7 @@ export default function Home() {
       </div>
 
       {/* Gallery Section */}
-      <section className="relative z-10 bg-black py-40">
+      <section className="relative z-10 bg-black/40 backdrop-blur-lg py-40">
         <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
@@ -369,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* About the Artist Section */}
-      <section className="relative z-10 bg-zinc-800/30 py-20 ">
+      <section className="relative z-10 bg-zinc-800/30 py-20 backdrop-brightness-[0.3] ">
         <div className="container mx-auto px-4 max-w-xl">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -400,7 +400,10 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 relative overflow-hidden">
+      <section
+        id="contact"
+        className="py-20 relative overflow-hidden backdrop-brightness-50"
+      >
         <motion.div
           animate={{
             background: [
@@ -443,7 +446,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-black border-t border-white/10">
+      <footer className="py-12 bg-black border-t border-white/10 z-40 relative">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
