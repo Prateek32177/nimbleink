@@ -187,109 +187,112 @@ export default function Home() {
       </audio>
       <Logo />
       <div className="h-screen flex flex-col">
-        {/* Main Slider Section */}
-        <div className="relative flex-1 overflow-hidden">
-          <div className="fixed inset-0 flex">
-            {artworks.map((artwork, index) => {
-              const styles = calculateSlideStyles(index);
-              const isActive = index === currentIndex;
+        {/* Hero Section with Image Slider and Bottom Navigation */}
+        <section className="relative flex-1 flex flex-col">
+          {/* Image Slider */}
+          <div className="relative flex-1 overflow-hidden">
+            <div className="fixed inset-0 flex">
+              {artworks.map((artwork, index) => {
+                const styles = calculateSlideStyles(index);
+                const isActive = index === currentIndex;
 
-              return (
-                <motion.div
-                  key={index}
-                  className="absolute top-0 bottom-0"
-                  initial={false}
-                  animate={{
-                    width: styles.width,
-                    left: styles.left,
-                    zIndex: styles.zIndex,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.43, 0.13, 0.23, 0.96],
-                  }}
-                >
-                  <div className="relative h-full overflow-hidden">
-                    {/* Image with unified filter */}
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
-                      style={{
-                        backgroundImage: `url(${artwork.image})`,
-                      }}
-                    >
+                return (
+                  <motion.div
+                    key={index}
+                    className="absolute top-0 bottom-0"
+                    initial={false}
+                    animate={{
+                      width: styles.width,
+                      left: styles.left,
+                      zIndex: styles.zIndex,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.43, 0.13, 0.23, 0.96],
+                    }}
+                  >
+                    <div className="relative h-full overflow-hidden">
+                      {/* Image with unified filter */}
                       <div
-                        className={`absolute inset-0 ${
-                          isActive ? "bg-black/30" : "bg-black/70"
-                        }`}
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative h-full flex flex-col justify-between p-4 md:p-8 mt-16 md:mt-12">
-                      {isActive && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          transition={{ delay: 0.3 }}
-                          className="max-w-xl"
-                        >
-                          <h1
-                            className={`text-4xl md:text-6xl lg:text-8xl  tracking-tight mb-4 ${cherryFont.className}`}
-                          >
-                            {artwork.title.split("").map((letter, i) => (
-                              <motion.span
-                                key={i}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.5 + i * 0.1 }}
-                                className="inline-block"
-                              >
-                                {letter}
-                              </motion.span>
-                            ))}
-                          </h1>
-                        </motion.div>
-                      )}
-
-                      {/* Info Panel for inactive slides */}
-                      {!isActive && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.6 }}
-                          className={`backdrop-brightness-50 bg-white/10 rounded-lg p-4 ${
-                            isActive
-                              ? "w-full"
-                              : "w-[300px] rotate-90 origin-left"
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
+                        style={{
+                          backgroundImage: `url(${artwork.image})`,
+                        }}
+                      >
+                        <div
+                          className={`absolute inset-0 ${
+                            isActive ? "bg-black/30" : "bg-black/70"
                           }`}
-                        >
-                          <div className="flex items-start gap-4">
-                            <span className="text-2xl font-light opacity-60">
-                              0{index + 1}
-                            </span>
-                            <div
-                              className={isActive ? "" : "whitespace-nowrap"}
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <div className="relative h-full flex flex-col justify-between p-4 md:p-8 mt-16 md:mt-12">
+                        {isActive && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ delay: 0.3 }}
+                            className="max-w-xl"
+                          >
+                            <h1
+                              className={`text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight mb-4 ${cherryFont.className}`}
                             >
-                              <h3 className="text-lg font-medium mb-1">
-                                {artwork.title}
-                              </h3>
-                              <p className="text-sm text-white/70 hidden md:block">
-                                {artwork.description}
-                              </p>
+                              {artwork.title.split("").map((letter, i) => (
+                                <motion.span
+                                  key={i}
+                                  initial={{ opacity: 0, x: 20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: 0.5 + i * 0.1 }}
+                                  className="inline-block"
+                                >
+                                  {letter}
+                                </motion.span>
+                              ))}
+                            </h1>
+                          </motion.div>
+                        )}
+
+                        {/* Info Panel for inactive slides */}
+                        {!isActive && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.6 }}
+                            className={`backdrop-brightness-50 bg-white/10 rounded-lg p-4 ${
+                              isActive
+                                ? "w-full"
+                                : "w-[300px] rotate-90 origin-left"
+                            }`}
+                          >
+                            <div className="flex items-start gap-4">
+                              <span className="text-2xl font-light opacity-60">
+                                0{index + 1}
+                              </span>
+                              <div
+                                className={isActive ? "" : "whitespace-nowrap"}
+                              >
+                                <h3 className="text-lg font-medium mb-1">
+                                  {artwork.title}
+                                </h3>
+                                <p className="text-sm text-white/70 hidden md:block">
+                                  {artwork.description}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </motion.div>
-                      )}
+                          </motion.div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-black/60 border-t border-white/10 absolute bottom-0 left-0 right-0 z-20 backdrop-blur-sm">
+          <div className="bg-black/60 border-t border-white/10 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4">
               <div className="py-4 md:py-6 flex items-center justify-between">
                 <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
@@ -325,7 +328,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Gallery Section */}
