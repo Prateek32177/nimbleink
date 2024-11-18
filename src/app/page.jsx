@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Instagram, Twitter, Play, Pause } from "lucide-react";
+import {
+  ArrowRight,
+  Instagram,
+  Twitter,
+  Play,
+  Pause,
+  Copy,
+  Check,
+} from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Macondo_Swash_Caps, Cherry_Bomb_One } from "next/font/google";
@@ -15,12 +23,14 @@ const cherryFont = Cherry_Bomb_One({
   weight: "400",
   subsets: ["latin"],
 });
+
 const artworks = [
   {
     title: "Digital Art",
     description: "Creating unique digital experiences",
     image: "https://pbs.twimg.com/media/GcfGtWQbIAAkNni?format=jpg&name=small",
     price: 2499,
+    id: "DA001",
   },
   {
     title: "Illustrations",
@@ -28,6 +38,7 @@ const artworks = [
     image:
       "https://i.pinimg.com/736x/1d/32/89/1d3289838d81c8e5021418cf91b5ffd0.jpg",
     price: 1999,
+    id: "IL002",
   },
   {
     title: "3D Models",
@@ -35,6 +46,7 @@ const artworks = [
     image:
       "https://i.pinimg.com/736x/fb/1d/23/fb1d232becd917b6aa4a7ff81d87ce46.jpg",
     price: 2799,
+    id: "3D003",
   },
   {
     title: "Animations",
@@ -42,8 +54,44 @@ const artworks = [
     image:
       "https://i.pinimg.com/736x/3a/7e/32/3a7e32800780ccda1529a64a257f6787.jpg",
     price: 3299,
+    id: "AN004",
   },
 ];
+
+const ArtId = ({ id }) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(id);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="absolute bottom-4 right-4 z-10">
+      <motion.button
+        onClick={copyToClipboard}
+        className="flex items-center space-x-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <span className="font-mono">{id}</span>
+        {copied ? <Check size={16} /> : <Copy size={16} />}
+      </motion.button>
+    </div>
+  );
+};
+
+const PriceTag = ({ price }) => (
+  <div className="absolute top-4 right-4 z-10">
+    <div className="relative">
+      <div className="bg-rose-600 text-white px-3 py-1 rounded-full shadow-lg transform -rotate-12">
+        <span className="font-bold">${price}</span>
+      </div>
+      <div className="absolute top-0 left-1/2 w-px h-6 bg-rose-600 transform -translate-x-1/2 -translate-y-full"></div>
+    </div>
+  </div>
+);
 
 const AnimatedNotes = ({ isPlaying }) => {
   return (
@@ -186,9 +234,9 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
       <Logo />
-      <div className="h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         {/* Hero Section with Image Slider and Bottom Navigation */}
-        <section className="relative flex-1 flex flex-col">
+        <section className="h-screen relative flex-1 flex flex-col">
           {/* Image Slider */}
           <div className="relative flex-1 overflow-hidden">
             <div className="fixed inset-0 flex">
@@ -294,8 +342,8 @@ export default function Home() {
           {/* Bottom Navigation */}
           <div className="bg-black/60 border-t border-white/10 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="py-4 md:py-6 flex items-center justify-between">
-                <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
+              <div className="py-4 md:py-6 flex items-center justify-between overflow-x-auto">
+                <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8 min-w-max">
                   {artworks.map((artwork, index) => (
                     <motion.button
                       key={index}
@@ -351,7 +399,7 @@ export default function Home() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {artworks.map((artwork, i) => (
               <motion.div
                 key={i}
@@ -367,18 +415,20 @@ export default function Home() {
                   <img
                     src={artwork.image}
                     alt={artwork.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="transition-transform duration-300 group-hover:scale-110 object-fill"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <h3 className="text-2xl font-bold mb-2">
-                        {artwork.title}
-                      </h3>
-                      <p className="text-sm mb-4">{artwork.description}</p>
-                      <span className="inline-block bg-white text-black px-4 py-2 rounded-full text-sm font-bold">
-                        ${artwork.price}
-                      </span>
-                    </div>
+                  <PriceTag price={artwork.price} />
+                  <ArtId id={artwork.id} />
+
+                  <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <h3
+                      className={`text-xl font-bold mb-1 text-white ${artFont.className}`}
+                    >
+                      {artwork.title}
+                    </h3>
+                    <p className="text-sm text-white/80">
+                      {artwork.description}
+                    </p>
                   </div>
                 </div>
               </motion.div>
