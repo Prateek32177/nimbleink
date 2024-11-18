@@ -4,7 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowRight, Instagram, Twitter, Play, Pause } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { Macondo_Swash_Caps, Cherry_Bomb_One } from "next/font/google";
 
+const artFont = Macondo_Swash_Caps({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const cherryFont = Cherry_Bomb_One({
+  weight: "400",
+  subsets: ["latin"],
+});
 const artworks = [
   {
     title: "Digital Art",
@@ -91,7 +101,9 @@ const Logo = () => (
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <h1 className="text-xl tracking-tight font-serif font-extralight">
+      <h1
+        className={`${artFont.className} text-xl tracking-tight font-serif font-extralight`}
+      >
         Nimble
       </h1>
       <motion.div
@@ -174,10 +186,10 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
       <Logo />
-      <div className="min-h-screen md:min-h-screen h-[100svh] md:h-screen flex flex-col">
+      <div className="h-screen flex flex-col">
         {/* Main Slider Section */}
         <div className="relative flex-1 overflow-hidden">
-          <div className="fixed md:absolute inset-0 flex">
+          <div className="fixed inset-0 flex">
             {artworks.map((artwork, index) => {
               const styles = calculateSlideStyles(index);
               const isActive = index === currentIndex;
@@ -222,7 +234,9 @@ export default function Home() {
                           transition={{ delay: 0.3 }}
                           className="max-w-xl"
                         >
-                          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight mb-4">
+                          <h1
+                            className={`text-4xl md:text-6xl lg:text-8xl  tracking-tight mb-4 ${cherryFont.className}`}
+                          >
                             {artwork.title.split("").map((letter, i) => (
                               <motion.span
                                 key={i}
@@ -275,7 +289,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-black/60 border-t border-white/10 bottom-0 absolute   z-20 backdrop-blur-sm w-full ">
+          <div className="bg-black/60 border-t border-white/10 absolute bottom-0 left-0 right-0 z-20 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4">
               <div className="py-4 md:py-6 flex items-center justify-between">
                 <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8">
@@ -315,19 +329,21 @@ export default function Home() {
       </div>
 
       {/* Gallery Section */}
-      <section className="relative z-10 bg-black/40 backdrop-blur-lg py-40">
+      <section className="relative z-10 bg-black/40 backdrop-blur-lg py-20">
         <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="mb-20"
+            className=" max-w-3xl mx-auto text-center"
           >
-            <span className="text-violet-400 text-sm tracking-widest">
-              GALLERY
+            <span className="text-rose-400 text-sm tracking-widest">
+              Art Gallery
             </span>
-            <h2 className="text-6xl font-light text-white mt-2">
+            <h2
+              className={`text-4xl font-light text-white mt-2 mb-6 ${artFont.className}`}
+            >
               Featured Art Pieces
             </h2>
           </motion.div>
@@ -379,7 +395,9 @@ export default function Home() {
             className="max-w-3xl mx-auto text-center"
           >
             <span className="text-rose-400 text-sm tracking-widest">ABOUT</span>
-            <h2 className="text-4xl font-light text-white mt-2 mb-6">
+            <h2
+              className={`text-4xl font-light text-white mt-2 mb-6 ${artFont.className}`}
+            >
               The Artist
             </h2>
             <p className="text-lg text-white/80 mb-8">
@@ -426,7 +444,9 @@ export default function Home() {
             <span className="text-rose-400 text-sm tracking-widest">
               GET IN TOUCH
             </span>
-            <h2 className="text-4xl font-light text-white mt-2 mb-6">
+            <h2
+              className={`text-4xl font-light text-white mt-2 mb-6 ${artFont.className}`}
+            >
               Let's Create Together
             </h2>
             <p className="text-lg text-white/80 mb-8">
@@ -450,11 +470,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-light tracking-wider mb-2">
+              <h3
+                className={`text-2xl font-light tracking-wider mb-2 ${artFont.className}`}
+              >
                 NIMBLE
               </h3>
-              <p className="text-white/60 font-light">
-                Redefining digital art since 2024
+              <p className="text-white/60 font-light font-sans">
+                Redefining digital art since 2018
               </p>
             </div>
             <div className="flex gap-6">
