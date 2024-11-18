@@ -184,11 +184,17 @@ export default function Home() {
     }
   };
 
-  const prevSlide = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev - 1 + artworks.length) % artworks.length);
-      setTimeout(() => setIsTransitioning(false), 500);
+  const [isStoryPlaying, setIsStoryPlaying] = useState(false);
+  const storyAudioRef = useRef(null);
+
+  const toggleStoryAudio = () => {
+    if (storyAudioRef.current) {
+      if (isStoryPlaying) {
+        storyAudioRef.current.pause();
+      } else {
+        storyAudioRef.current.play();
+      }
+      setIsStoryPlaying(!isStoryPlaying);
     }
   };
 
@@ -340,7 +346,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Navigation */}
-          <div className="bg-black/60 border-t border-white/10 backdrop-blur-sm">
+          {/* <div className="bg-black/60 border-t border-white/10 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4">
               <div className="py-4 md:py-6 flex items-center justify-between overflow-x-auto">
                 <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8 min-w-max">
@@ -360,6 +366,43 @@ export default function Home() {
                         {artwork.title}
                       </h3>
                       <p className="text-xs md:text-sm opacity-60 truncate hidden md:block">
+                        {artwork.description}
+                      </p>
+                      {index === currentIndex && (
+                        <motion.div
+                          className="h-px bg-white mt-2"
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 5, ease: "linear" }}
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div> */}
+
+          <div className="absolute bottom-0 left-0 right-0 bg-black/60 border-t border-white/10 backdrop-blur-sm z-50">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="py-4 flex items-center justify-between overflow-x-auto">
+                <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4 min-w-max">
+                  {artworks.map((artwork, index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => !isTransitioning && setCurrentIndex(index)}
+                      className={`text-left group ${
+                        index === currentIndex ? "text-white" : "text-white/40"
+                      }`}
+                      whileHover={{ opacity: 1 }}
+                    >
+                      <p className="text-xs sm:text-sm font-medium mb-1">{`0${
+                        index + 1
+                      }`}</p>
+                      <h3 className="text-sm sm:text-base font-semibold truncate">
+                        {artwork.title}
+                      </h3>
+                      <p className="text-xs opacity-60 truncate hidden sm:block">
                         {artwork.description}
                       </p>
                       {index === currentIndex && (
@@ -438,14 +481,14 @@ export default function Home() {
       </section>
 
       {/* About the Artist Section */}
-      <section className="relative z-10 bg-zinc-800/30 py-20 backdrop-brightness-[0.3] ">
-        <div className="container mx-auto px-4 max-w-xl">
+      <section className="relative z-10 bg-zinc-800/30 py-20 backdrop-brightness-[0.3]">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-5xl mx-auto text-center"
           >
             <span className="text-rose-400 text-sm tracking-widest">ABOUT</span>
             <h2
@@ -453,17 +496,55 @@ export default function Home() {
             >
               The Artist
             </h2>
-            <p className="text-lg text-white/80 mb-8">
-              As a visionary digital artist, I blend cutting-edge technology
-              with timeless artistic principles. My work explores the
-              intersection of reality and the digital realm, inviting viewers to
-              question the boundaries of what's possible in art.
+            <p className="text-lg text-white/80 mb-8 font-serif">
+              <strong className="font-semibold">
+                Light Weaver: Digital Alchemy of Imagination :{" "}
+              </strong>
+              <br />I am an illumination artist who transforms the ephemeral—raw
+              sketches, fleeting doodles—into luminous narratives of
+              possibility. My digital canvas is a realm where shadows dance with
+              light, where dormant lines awaken and breathe with ethereal
+              energy. Each piece is a journey of revelation: I don't merely
+              create art, I excavate hidden stories buried within seemingly
+              mundane strokes. My work transcends traditional boundaries,
+              bridging the delicate space between the physical and digital
+              worlds. Through intricate light manipulation and digital
+              craftsmanship, I breathe life into silent drawings, revealing
+              their unspoken potential. My artistic philosophy is rooted in
+              metamorphosis—seeing beyond the initial sketch to the vibrant
+              universe waiting to emerge. I view every doodle as a seed of
+              infinite possibility, waiting to be nurtured by creative vision
+              and technological innovation. More than an artist, I am a visual
+              alchemist—transforming the ordinary into the extraordinary, one
+              illuminated line at a time.
             </p>
-            <Link
-              href="#contact"
-              className="inline-flex items-center px-6 py-3 text-sm bg-white text-black rounded-full hover:bg-rose-100 transition-colors duration-300"
+            <span className="block font-serif font-italic mb-6">
+              - Prateek Jain
+            </span>
+            <motion.button
+              onClick={toggleStoryAudio}
+              className="inline-flex items-center px-6 py-3 text-sm bg-rose-500 text-white rounded-full hover:bg-rose-600 transition-colors duration-300 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Learn More
+              {isStoryPlaying ? (
+                <>
+                  <Pause className="mr-2 h-4 w-4" />
+                  Pause Story
+                </>
+              ) : (
+                <>
+                  <Play className="mr-2 h-4 w-4" />
+                  Hear My Story
+                </>
+              )}
+            </motion.button>
+            <audio ref={storyAudioRef} src="/artist_story.mp3" />
+            <Link
+              href="mailto:prateek56489@gmail.com"
+              className="mt-4 ml-4 inline-flex items-center px-6 py-3 text-sm bg-white text-black rounded-full hover:bg-rose-100 transition-colors duration-300"
+            >
+              Let's Connect
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </motion.div>
@@ -486,7 +567,7 @@ export default function Home() {
           transition={{ duration: 10, repeat: Infinity }}
           className="absolute inset-0"
         />
-        <div className="container mx-auto px-4 relative max-w-xl">
+        <div className="container mx-auto px-4 relative max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -502,16 +583,22 @@ export default function Home() {
             >
               Let's Create Together
             </h2>
-            <p className="text-lg text-white/80 mb-8">
-              Interested in purchasing a piece or commissioning custom artwork?
-              Drop your art ID, and we'll discuss the details to bring your
-              vision to life.
+            <p className="text-lg text-white/80 mb-8 font-serif">
+              If a particular artwork has captured your imagination, we invite
+              you to connect with our curatorial team. Simply Copy & Share the
+              artwork's unique ID and your vision by clicking "Acquire Artwork",
+              and we'll guide you through a personalized acquisition experience.
+              From detailed shipping logistics to seamless payment processing,
+              we're committed to illuminating your artistic dreams. Let us
+              collaborate to bring your aesthetic aspirations to life,
+              transforming not just an artwork, but the very atmosphere of your
+              space.
             </p>
             <Link
-              href="#contact"
+              href="mailto:prateek56489@gmail.com"
               className="inline-flex items-center px-6 py-3 text-sm text-white border border-white/20 rounded-full hover:bg-white hover:text-black transition-colors duration-300"
             >
-              Start a Project
+              Acquire Artwork
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </motion.div>
