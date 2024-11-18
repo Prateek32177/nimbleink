@@ -496,7 +496,7 @@ export default function Home() {
             >
               The Artist
             </h2>
-            <p className="text-lg text-white/80 mb-8 font-serif">
+            <p className="text-sm md:text-lg text-white/80 mb-8 font-serif">
               <strong className="font-semibold">
                 Light Weaver: Digital Alchemy of Imagination :{" "}
               </strong>
@@ -583,7 +583,7 @@ export default function Home() {
             >
               Let's Create Together
             </h2>
-            <p className="text-lg text-white/80 mb-8 font-serif">
+            <p className="text-sm md:text-lg text-white/80 mb-8 font-serif">
               If a particular artwork has captured your imagination, we invite
               you to connect with our curatorial team. Simply Copy & Share the
               artwork's unique ID and your vision by clicking "Acquire Artwork",
