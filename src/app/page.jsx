@@ -26,34 +26,36 @@ const cherryFont = Cherry_Bomb_One({
 
 const artworks = [
   {
-    title: "Digital Art",
-    description: "Creating unique digital experiences",
-    image: "https://pbs.twimg.com/media/GcfGtWQbIAAkNni?format=jpg&name=small",
-    price: 2499,
+    title: "StarDust Ballet",
+    description:
+      "A Cosmic ballet, where stardust twirls and dreams take flight.",
+    image:
+      "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732209315/backupPreview_qztimt.png",
+    price: 399,
     id: "DA001",
   },
   {
-    title: "Illustrations",
-    description: "Hand-crafted digital illustrations",
+    title: "Glowing Serenity",
+    description: "Pixelated serenity in neon hues.",
     image:
-      "https://i.pinimg.com/736x/1d/32/89/1d3289838d81c8e5021418cf91b5ffd0.jpg",
-    price: 1999,
+      "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732212284/1000039370_1_gr5bcr.jpg",
+    price: 299,
     id: "IL002",
   },
   {
-    title: "3D Models",
-    description: "Immersive 3D artwork",
+    title: "The Saiyan's Strength",
+    description: "Fierce Saiyan warrior ready for battle.",
     image:
-      "https://i.pinimg.com/736x/fb/1d/23/fb1d232becd917b6aa4a7ff81d87ce46.jpg",
-    price: 2799,
+      "https://res.cloudinary.com/dsxmpanyt/image/upload/t_Grayscale/v1732212964/IMG_20241117_200032_d8j0fg.jpg",
+    price: 149,
     id: "3D003",
   },
   {
-    title: "Animations",
-    description: "Dynamic motion graphics",
+    title: "Mesmerizing Beauties",
+    description: "Handdrawn in eyes beauty.",
     image:
-      "https://i.pinimg.com/736x/3a/7e/32/3a7e32800780ccda1529a64a257f6787.jpg",
-    price: 3299,
+      "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732212961/IMG_20191118_195412-02_yepqre.jpg",
+    price: 199,
     id: "AN004",
   },
 ];
@@ -268,7 +270,7 @@ export default function Home() {
                     <div className="relative h-full overflow-hidden">
                       {/* Image with unified filter */}
                       <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
+                        className="absolute inset-0 bg-cover bg-no-repeat bg-center transition-transform duration-500"
                         style={{
                           backgroundImage: `url(${artwork.image})`,
                         }}
@@ -523,7 +525,7 @@ export default function Home() {
             </span>
             <motion.button
               onClick={toggleStoryAudio}
-              className="inline-flex items-center px-6 py-3 text-sm bg-rose-500 text-white rounded-full hover:bg-rose-600 transition-colors duration-300 shadow-lg"
+              className="inline-flex align-middle items-center px-6 py-3 text-sm bg-rose-500 text-white rounded-full hover:bg-rose-600 transition-colors duration-300 shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -542,7 +544,7 @@ export default function Home() {
             <audio ref={storyAudioRef} src="/artist_story.mp3" />
             <Link
               href="mailto:prateek56489@gmail.com"
-              className="mt-4 ml-4 inline-flex items-center px-6 py-3 text-sm bg-white text-black rounded-full hover:bg-rose-100 transition-colors duration-300"
+              className="ml-4 inline-flex items-center px-6 py-3 text-sm bg-white text-black rounded-full hover:bg-rose-100 transition-colors duration-300"
             >
               Let's Connect
               <ArrowRight className="ml-2 h-4 w-4" />
