@@ -27,11 +27,10 @@ const cherryFont = Cherry_Bomb_One({
 const artworks = [
   {
     title: "StarDust Ballet",
-    description:
-      "A Cosmic ballet, where stardust twirls and dreams take flight.",
+    description: "Stardust twirls and dreams take flight.",
     image:
       "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732209315/backupPreview_qztimt.png",
-    price: 399,
+    price: "$299",
     id: "DA001",
   },
   {
@@ -39,15 +38,15 @@ const artworks = [
     description: "Pixelated serenity in neon hues.",
     image:
       "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732212284/1000039370_1_gr5bcr.jpg",
-    price: 299,
+    price: "$199",
     id: "IL002",
   },
   {
-    title: "The Saiyan's Strength",
+    title: "Saiyan's Strength",
     description: "Fierce Saiyan warrior ready for battle.",
     image:
       "https://res.cloudinary.com/dsxmpanyt/image/upload/t_Grayscale/v1732212964/IMG_20241117_200032_d8j0fg.jpg",
-    price: 149,
+    price: "$149",
     id: "3D003",
   },
   {
@@ -55,8 +54,16 @@ const artworks = [
     description: "Handdrawn in eyes beauty.",
     image:
       "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732212961/IMG_20191118_195412-02_yepqre.jpg",
-    price: 199,
+    price: "$199",
     id: "AN004",
+  },
+  {
+    title: "Stolen Glance",
+    description: "Graphite sketch capturing the essence of a fleeting moment.",
+    image:
+      "https://res.cloudinary.com/dsxmpanyt/image/upload/v1732265593/PSX_20210908_205045-01_mwjhbi.jpg",
+    price: "Sold",
+    id: "FL004",
   },
 ];
 
@@ -88,7 +95,7 @@ const PriceTag = ({ price }) => (
   <div className="absolute top-4 right-4 z-10">
     <div className="relative">
       <div className="bg-rose-600 text-white px-3 py-1 rounded-full shadow-lg transform -rotate-12">
-        <span className="font-bold">${price}</span>
+        <span className="font-bold">{price}</span>
       </div>
       <div className="absolute top-0 left-1/2 w-px h-6 bg-rose-600 transform -translate-x-1/2 -translate-y-full"></div>
     </div>
@@ -165,6 +172,7 @@ const Logo = () => (
     </motion.div>
   </motion.div>
 );
+
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -181,7 +189,7 @@ export default function Home() {
   const nextSlide = () => {
     if (!isTransitioning) {
       setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev + 1) % artworks.length);
+      setCurrentIndex((prev) => (prev + 1) % 4); // Only cycle through 4 artworks
       setTimeout(() => setIsTransitioning(false), 500);
     }
   };
@@ -201,15 +209,14 @@ export default function Home() {
   };
 
   const calculateSlideStyles = (index) => {
-    const position = (index - currentIndex + artworks.length) % artworks.length;
-    const totalSlides = artworks.length;
-    const activeWidth = 70; // Active slide width in percentage
-    const inactiveWidth = (100 - activeWidth) / 3; // Show 3 slits on large screens
+    const position = (index - currentIndex + 4) % 4; // Only consider 4 artworks
+    const activeWidth = 70;
+    const inactiveWidth = (100 - activeWidth) / 3;
 
     const isActive = position === 0;
     let order = position;
-    if (position > totalSlides / 2) {
-      order = position - totalSlides;
+    if (position > 2) {
+      order = position - 4;
     }
 
     const leftPosition = isActive
@@ -220,7 +227,7 @@ export default function Home() {
       width: isActive ? `${activeWidth}%` : `${inactiveWidth}%`,
       left: leftPosition,
       order: order,
-      zIndex: isActive ? totalSlides : totalSlides - Math.abs(order),
+      zIndex: isActive ? 4 : 4 - Math.abs(order),
     };
   };
 
@@ -248,7 +255,7 @@ export default function Home() {
           {/* Image Slider */}
           <div className="relative flex-1 overflow-hidden">
             <div className="fixed inset-0 flex">
-              {artworks.map((artwork, index) => {
+              {artworks.slice(0, 4).map((artwork, index) => {
                 const styles = calculateSlideStyles(index);
                 const isActive = index === currentIndex;
 
@@ -295,17 +302,33 @@ export default function Home() {
                             <h1
                               className={`text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight mb-4 ${cherryFont.className}`}
                             >
-                              {artwork.title.split("").map((letter, i) => (
-                                <motion.span
-                                  key={i}
-                                  initial={{ opacity: 0, x: 20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.5 + i * 0.1 }}
-                                  className="inline-block"
-                                >
-                                  {letter}
-                                </motion.span>
-                              ))}
+                              {artwork.title
+                                .split(" ")
+                                .map((word, wordIndex) => (
+                                  <span
+                                    key={wordIndex}
+                                    className="inline-block mr-4"
+                                  >
+                                    {word
+                                      .split("")
+                                      .map((letter, letterIndex) => (
+                                        <motion.span
+                                          key={letterIndex}
+                                          initial={{ opacity: 0, x: 20 }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          transition={{
+                                            delay:
+                                              0.5 +
+                                              wordIndex * 0.2 +
+                                              letterIndex * 0.1,
+                                          }}
+                                          className="inline-block"
+                                        >
+                                          {letter}
+                                        </motion.span>
+                                      ))}
+                                  </span>
+                                ))}
                             </h1>
                           </motion.div>
                         )}
@@ -346,50 +369,12 @@ export default function Home() {
               })}
             </div>
           </div>
-
           {/* Bottom Navigation */}
-          {/* <div className="bg-black/60 border-t border-white/10 backdrop-blur-sm">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="py-4 md:py-6 flex items-center justify-between overflow-x-auto">
-                <div className="flex-1 grid grid-cols-4 gap-4 md:gap-8 min-w-max">
-                  {artworks.map((artwork, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => !isTransitioning && setCurrentIndex(index)}
-                      className={`text-left group ${
-                        index === currentIndex ? "text-white" : "text-white/40"
-                      }`}
-                      whileHover={{ opacity: 1 }}
-                    >
-                      <p className="text-xs md:text-sm font-medium mb-1 md:mb-2">{`0${
-                        index + 1
-                      }`}</p>
-                      <h3 className="text-sm md:text-lg font-semibold truncate">
-                        {artwork.title}
-                      </h3>
-                      <p className="text-xs md:text-sm opacity-60 truncate hidden md:block">
-                        {artwork.description}
-                      </p>
-                      {index === currentIndex && (
-                        <motion.div
-                          className="h-px bg-white mt-2"
-                          initial={{ width: "0%" }}
-                          animate={{ width: "100%" }}
-                          transition={{ duration: 5, ease: "linear" }}
-                        />
-                      )}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div> */}
-
           <div className="absolute bottom-0 left-0 right-0 bg-black/60 border-t border-white/10 backdrop-blur-sm z-50">
             <div className="max-w-7xl mx-auto px-4">
               <div className="py-4 flex items-center justify-between overflow-x-auto">
                 <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4 min-w-max">
-                  {artworks.map((artwork, index) => (
+                  {artworks.slice(0, 4).map((artwork, index) => (
                     <motion.button
                       key={index}
                       onClick={() => !isTransitioning && setCurrentIndex(index)}
@@ -460,7 +445,7 @@ export default function Home() {
                   <img
                     src={artwork.image}
                     alt={artwork.title}
-                    className="transition-transform duration-300 group-hover:scale-110 object-fill"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <PriceTag price={artwork.price} />
                   <ArtId id={artwork.id} />
@@ -502,7 +487,7 @@ export default function Home() {
               <strong className="font-semibold">
                 Light Weaver: Digital Alchemy of Imagination :{" "}
               </strong>
-              <br />I am an illumination artist who transforms the ephemeral—raw
+              <br />I am an illumination artist who transforms the raw
               sketches, fleeting doodles—into luminous narratives of
               possibility. My digital canvas is a realm where shadows dance with
               light, where dormant lines awaken and breathe with ethereal
